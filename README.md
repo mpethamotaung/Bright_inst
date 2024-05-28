@@ -1,4 +1,4 @@
-# BMSI
+# Bright Maths & Science Institution
 
 ## Overview
 
