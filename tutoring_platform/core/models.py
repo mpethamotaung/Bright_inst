@@ -7,4 +7,5 @@ class User(AbstractUser):
     is_student = models.BooleanField(default=True)
     bio = models.TextField(blank=True, null=True)
 
-
+class Subject(models.Model):
+    name = models.CharField(max_length=100)
