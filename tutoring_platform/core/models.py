@@ -9,3 +9,9 @@ class User(AbstractUser):
 
 class Subject(models.Model):
     name = models.CharField(max_length=100)
+
+class Session(models.Model):
+    tutor = models.ForeignKey(User, related_name='tutoring_sessions', on_delete=models.CASCADE)
+    student = models.ForeignKey(User, related_name='learning_sessions', on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    scheduled_time = models.DateTimeField()
