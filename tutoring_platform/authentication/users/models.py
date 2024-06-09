@@ -1,3 +1,6 @@
-from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
+#Custom model used to customize user model 
+class CustomUser(AbstractUser):
+
+    pass
