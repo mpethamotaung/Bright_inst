@@ -37,8 +37,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "users",
-    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -82,8 +80,7 @@ DATABASES = {
     }
 }
 
-# use custom user model instead of defualt user model
-AUTH_USER_MODEL = 'users.CustomUser'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
