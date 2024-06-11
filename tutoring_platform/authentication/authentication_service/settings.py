@@ -81,6 +81,8 @@ DATABASES = {
     }
 }
 
+#Specify which model for django to use
+AUTH_USER_MODEL = 'users.CustomUser'
 
 
 # Password validation
