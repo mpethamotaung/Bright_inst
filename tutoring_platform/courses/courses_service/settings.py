@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles", 
-    "course",
+    "course", #Add created micro app 'course' to micro service course_service
 ]
 
 MIDDLEWARE = [
