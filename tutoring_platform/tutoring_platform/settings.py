@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "booking",
     "core",
     "courses",
+    "shared_assets"
 ]
 
 MIDDLEWARE = [
