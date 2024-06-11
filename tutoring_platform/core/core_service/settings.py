@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "home", #This adds home app in core_service project
 ]
 
 MIDDLEWARE = [
