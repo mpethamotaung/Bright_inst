@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "users",
+    "users", #include users app to authentication_service
+    "rest_framework", #tells django to include django rest framework in the project
 ]
 
 MIDDLEWARE = [
