@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+#This model represents a course with fields(title, description, tutor, and creation date)
 class Course(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
