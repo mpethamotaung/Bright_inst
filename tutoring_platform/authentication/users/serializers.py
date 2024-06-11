@@ -11,3 +11,8 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
         return user
+
+"""Serializers in DRF are used to convert complex data types, such as
+    querysets and model instances, to native Python data types that can be
+    easily rendered into JSON, XML, or other content types. They are also used
+    to validate and transform input data when creating or updating models."""

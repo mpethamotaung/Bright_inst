@@ -21,3 +21,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/users/', include('users.url')), #connects main authentication_service urls to user app urls
 ]
+
+"""URLSs Configuration: defining the URL routes for the user registration endpoint. This connects our urls.py file in 
+    users app and inlcudes it in the main project(authentication_service) urls.py to allow user registration endpoint
+    to be accessed at '/users/register/' """
