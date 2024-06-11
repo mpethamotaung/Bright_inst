@@ -19,5 +19,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/users/', include('users.url')),
+    path('api/users/', include('users.url')), #connects main authentication_service urls to user app urls
 ]
