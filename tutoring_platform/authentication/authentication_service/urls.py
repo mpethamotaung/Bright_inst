@@ -19,11 +19,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import UserRegistrationView
+from .views import UserLoginView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/users/', include('users.urls')),  # Correct 'users.url' to 'users.urls'
-    path('api/auth/register/', UserRegistrationView.as_view(), name='user-registration'),
+    path('api/auth/register/', UserRegistrationView.as_view(), name='user-registration'), #User reg endpoint
+    path('api/auth/login/', UserLoginView.as_view(), name='user-login'),
 ]
 
 
