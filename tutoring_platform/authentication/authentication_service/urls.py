@@ -14,13 +14,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# authentication/authentication_service/urls.py
+
 from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/users/', include('users.url')), #connects main authentication_service urls to user app urls
+    path('api/users/', include('users.urls')),  # Correct 'users.url' to 'users.urls'
 ]
+
 
 """URLSs Configuration: defining the URL routes for the user registration endpoint. This connects our urls.py file in 
     users app and inlcudes it in the main project(authentication_service) urls.py to allow user registration endpoint
