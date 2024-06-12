@@ -39,8 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "users", #include users app to authentication_service
     "rest_framework", #tells django to include django rest framework(DRF) in the project
-                """Django Rest Framework(DRF): A powerful and flexible toolkit for building
-                    Web APIs in Django. Used to create endpoints(user registration and authentication)"""
 ]
 
 MIDDLEWARE = [
