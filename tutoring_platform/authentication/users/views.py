@@ -11,7 +11,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from .serializers import UserRegistrationSerializer, UserLoginSerializer
 
-
 #initiate user class to allow users to access this endpoint
 class UserCreate(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
