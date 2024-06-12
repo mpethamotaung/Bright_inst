@@ -23,7 +23,8 @@ from .views import UserLoginView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/users/', include('users.urls')),  # Correct 'users.url' to 'users.urls'
+    path('api/users/', include('users.urls')),
+    path('api/auth/', include('users.urls')),  # Connects main authentication_service URLs to users app URLs
     path('api/auth/register/', UserRegistrationView.as_view(), name='user-registration'), #User reg endpoint
     path('api/auth/login/', UserLoginView.as_view(), name='user-login'),
 ]
