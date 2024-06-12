@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "frontend", # add created app to main frontend_service app
 ]
 
 MIDDLEWARE = [
