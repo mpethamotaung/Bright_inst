@@ -1,11 +1,11 @@
-#authentication/authentication_service/serializers.py
+# authentication/authentication_service/serializers.py
 
-#necessary module imports
+# Necessary module imports
 from rest_framework import serializers
 from users.models import CustomUser
 from django.contrib.auth import authenticate
 
-#User serailizer
+# User serializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
@@ -16,7 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
         user = CustomUser.objects.create_user(**validated_data)
         return user
 
-#User login serializer
+# User login serializer
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
