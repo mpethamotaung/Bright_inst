@@ -1,9 +1,10 @@
 # users/urls.py
 
 from django.urls import path
-from .views import UserRegisterView, UserLoginView
+from .views import UserRegistrationView, UserLoginView
 
+# Define URL paths to access the views
 urlpatterns = [
-    path('register/', UserRegisterView.as_view(), name='user-register'),  # Endpoint for user registration
-    path('login/', UserLoginView.as_view(), name='user-login'),  # Endpoint for user login
+    path('register/', UserRegistrationView.as_view(), name='user-register'),
+    path('login/', UserLoginView.as_view(), name='user-login'),
 ]
