@@ -1,42 +1,33 @@
 # authentication_service/views.py
 
-#User registration imports
+# Necessary imports for user registration
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserRegistrationSerializer
+from .serializers import UserSerializer, UserLoginSerializer  # Ensure you import both serializers
 
-#User login imports
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
+# Necessary imports for user login
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 
-
-#User registration View
+# User registration view
 class UserRegistrationView(APIView):
     def post(self, request):
-        serializer = UserRegistrationSerializer(data=request.data)
+        serializer = UserSerializer(data=request.data)  # Use UserSerializer here
         if serializer.is_valid():
             serializer.save()
             return Response({"message": "User registered successfully."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#User login view
-
+# User login view
 class UserLoginView(APIView):
     def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
-
-        # Authenticate user
-        user = authenticate(username=username, password=password)
-
-        if user is not None:
-            # User authenticated, generate JWT token
+        serializer = UserLoginSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.validated_data
             refresh = RefreshToken.for_user(user)
-            return Response({"message": "User logged in successfully.", "access_token": str(refresh.access_token)}, status=status.HTTP_200_OK)
-        else:
-            # Authentication failed
-            return Response({"message": "Invalid username or password."}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({
+                "message": "User logged in successfully.",
+                "access_token": str(refresh.access_token)
+            }, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
