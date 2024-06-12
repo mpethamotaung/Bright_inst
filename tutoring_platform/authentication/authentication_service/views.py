@@ -20,7 +20,7 @@ class UserLoginView(APIView):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data
-            refresh = RefreshToken.for_user(user)
+            refresh = RefreshToken.for_user(user)  # Generate JWT token
             return Response({
                 "message": "User logged in successfully.",
                 "access_token": str(refresh.access_token)
