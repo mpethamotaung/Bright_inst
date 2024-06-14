@@ -1,3 +1,5 @@
+#authentication_serice/serializers.py
+
 from rest_framework import serializers
 from users.models import CustomUser
 from django.contrib.auth import authenticate

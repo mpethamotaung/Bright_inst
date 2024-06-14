@@ -25,3 +25,9 @@ class UserLoginView(APIView):
                 "access_token": str(refresh.access_token)
             }, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#Test code:
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("Welcome to the Authentication Service!")
