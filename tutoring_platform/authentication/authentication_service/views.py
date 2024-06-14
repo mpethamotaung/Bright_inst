@@ -2,7 +2,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserSerializer, UserLoginSerializer
+from .serializers import UserSerializer, UserLoginSerializer, TokenRefreshSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 
@@ -23,6 +23,17 @@ class UserLoginView(APIView):
             return Response({
                 "message": "User logged in successfully.",
                 "access_token": str(refresh.access_token)
+            }, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class TokenRefreshView(APIView):
+    def post(self, request):
+        serializer = TokenRefreshSerializer(data=request.data)
+        if serializer.is_valid():
+            refresh = serializer.validated_data.get('refresh_token')
+            token = RefreshToken(refresh)
+            return Response({
+                'access_token': str(token.access_token)
             }, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
