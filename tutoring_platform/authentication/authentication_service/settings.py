@@ -16,7 +16,6 @@ from pathlib import Path
 from datetime import timedelta
 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "users", #include users app to authentication_service
     "rest_framework", #include django rest framework(DRF) 
-    "rest_framework_simplejwt.token_blacklist",
+    "rest_framework_simplejwt.token_blacklist", #Used to logout user 
 ]
 
 #Configure rest_framework settings for JWT
