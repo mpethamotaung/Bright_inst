@@ -16,7 +16,6 @@ Including another URLconf
 """
 # authentication/authentication_service/urls.py
 
-# authentication_service/urls.py
 from django.contrib import admin
 from django.urls import path, include
 from .views import UserRegistrationView, UserLoginView, TokenRefreshView, UserLogoutView ,index  # Ensure these imports are here
