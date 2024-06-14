@@ -16,15 +16,18 @@ Including another URLconf
 """
 # authentication/authentication_service/urls.py
 
+# authentication_service/urls.py
 from django.contrib import admin
 from django.urls import path, include
-from .views import UserRegistrationView
+from .views import UserRegistrationView, UserLoginView  # Ensure these imports are here
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', include('users.urls')),
-    path('api/auth/register/', UserRegistrationView.as_view(), name='user-registration'), # Handle user regisration
+    path('api/auth/register/', UserRegistrationView.as_view(), name='user-registration'),  # Registration endpoint
+    path('api/auth/login/', UserLoginView.as_view(), name='user-login'),  # Login endpoint
 ]
+
 
 
 

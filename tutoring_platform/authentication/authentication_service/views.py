@@ -1,5 +1,4 @@
-# authentication/authentication_service/views.py
-
+# authentication_service/views.py
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -20,7 +19,7 @@ class UserLoginView(APIView):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data
-            refresh = RefreshToken.for_user(user)  # Generate JWT token
+            refresh = RefreshToken.for_user(user)
             return Response({
                 "message": "User logged in successfully.",
                 "access_token": str(refresh.access_token)
