@@ -19,14 +19,15 @@ Including another URLconf
 # authentication_service/urls.py
 from django.contrib import admin
 from django.urls import path, include
-from .views import UserRegistrationView, UserLoginView, index  # Ensure these imports are here
+from .views import UserRegistrationView, UserLoginView, TokenRefreshView ,index  # Ensure these imports are here
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', include('users.urls')),
     path('api/auth/register/', UserRegistrationView.as_view(), name='user-registration'),  # Registration endpoint
     path('api/auth/login/', UserLoginView.as_view(), name='user-login'),  # Login endpoint
-
+    path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token-refresh'),
+    
     #Test code
     path('', index, name='index'),  # Root URL
 ]

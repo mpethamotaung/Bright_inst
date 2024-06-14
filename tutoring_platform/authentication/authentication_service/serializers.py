@@ -17,21 +17,39 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField()
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField()
 
-    def validate(self, data):
-        user = authenticate(**data)
-        if user and user.is_active:
-            return user
-        raise serializers.ValidationError("Invalid credentials")
+    def validate(self, attrs):
+        username = attrs.get('username')
+        password = attrs.get('password')
+
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if user:
+                attrs['user'] = user
+            else:
+                raise serializers.ValidationError('Invalid username or password.')
+        else:
+            raise serializers.ValidationError('Both username and password are required.')
+
+        return attrs
+    
+# authentication/authentication_service/serializers.py
+from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class TokenRefreshSerializer(serializers.Serializer):
     refresh_token = serializers.CharField()
 
     def validate(self, attrs):
-        refresh = attrs['refresh_token']
+        refresh_token = attrs['refresh_token']
+
         try:
-            RefreshToken(refresh)
+            token = RefreshToken(refresh_token)
         except Exception as e:
             raise serializers.ValidationError(str(e))
+
+        if not token.payload.get('token_type') == 'refresh':
+            raise serializers.ValidationError('Token is not of type refresh')
+
         return attrs
