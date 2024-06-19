@@ -21,9 +21,14 @@ class UserRegistrationView(View):
         return render(request, 'registration.html', {'errors': serializer.errors})
 
 #User Login Class
-class UserLoginView(APIView):
+class UserLoginView(View):
+    #Get Method: renders login html when page is accessed
+    def get(self, request):
+        return render(request, 'login.html')
+    
+    #POST Method: validates user data 
     def post(self, request):
-        serializer = UserLoginSerializer(data=request.data)
+        serializer = UserLoginSerializer(data=request.POST)
         if serializer.is_valid():
             user = serializer.validated_data['user']
             
@@ -32,15 +37,13 @@ class UserLoginView(APIView):
             access_token = str(refresh.access_token)
             refresh_token = str(refresh)
 
-            # Return tokens in response
-            return Response({
-                'message': 'User logged in successfully.',
-                'access_token': access_token,
-                'refresh_token': refresh_token
-            }, status=status.HTTP_200_OK)
+            # Store tokens in the session
+            request.session['access_token'] = access_token
+            request.session['refresh_token'] = refresh_token
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+            return render(request, 'login.html', {'message': 'User logged in successfully.'})
+        return render(request, 'login.html', {'errors': serializer.errors})
+#User Logout Class
 class UserLogoutView(APIView):
     def post(self, request):
         refresh_token = request.data.get('refresh_token')

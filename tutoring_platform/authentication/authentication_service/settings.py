@@ -86,13 +86,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "authentication_service.urls"
 
-# Add the path to shared_assets templates
-SHARED_TEMPLATES_DIR = os.path.join(BASE_DIR, '..', 'shared_assets', 'assets', 'templates')
+# Template settings
+SHARED_TEMPLATES_DIR = os.path.join(BASE_DIR, '..', '..', 'shared_assets', 'assets', 'templates')
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [SHARED_TEMPLATES_DIR],  # Add shared templates directory here
+        'DIRS': [os.path.join(BASE_DIR, "templates"), SHARED_TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,7 +104,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 
 WSGI_APPLICATION = "authentication_service.wsgi.application"
@@ -157,8 +156,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
 STATIC_URL = "static/"
+
+# Add the path to shared_assets static files
+SHARED_STATIC_DIR = os.path.join(BASE_DIR, '..', '..', 'shared_assets', 'assets', 'static')
+AUTHENTICATION_STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = [
+    AUTHENTICATION_STATIC_DIR,
+    SHARED_STATIC_DIR,
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

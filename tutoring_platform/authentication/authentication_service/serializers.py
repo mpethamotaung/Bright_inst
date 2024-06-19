@@ -4,6 +4,7 @@ from rest_framework import serializers
 from users.models import CustomUser
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,21 +20,21 @@ class UserLoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
 
-    def validate(self, attrs):
-        username = attrs.get('username')
-        password = attrs.get('password')
+    def validate(self, data):
+        username = data.get('username')
+        password = data.get('password')
 
         if username and password:
             user = authenticate(username=username, password=password)
-            if user:
-                attrs['user'] = user
-            else:
-                raise serializers.ValidationError('Invalid username or password.')
+            if user is None:
+                raise serializers.ValidationError("Invalid username or password")
+            data['user'] = user
         else:
-            raise serializers.ValidationError('Both username and password are required.')
-
-        return attrs
+            raise serializers.ValidationError("Both fields are required")
+        
+        return data
     
+
 # authentication/authentication_service/serializers.py
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
