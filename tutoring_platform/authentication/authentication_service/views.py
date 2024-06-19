@@ -1,20 +1,26 @@
 # authentication/authentication_service/views.py
-
+from django.shortcuts import render
 from rest_framework import status
+from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer, UserLoginSerializer, TokenRefreshSerializer  # Ensure TokenRefreshSerializer is imported
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
 
-class UserRegistrationView(APIView):
+#User registration class
+class UserRegistrationView(View):
+    #Get Method: renders registration html when reg page is accessed
+    def get(self, request):
+        return render(request, 'registration.html')
+    #POST Meth: processes form data
     def post(self, request):
-        serializer = UserSerializer(data=request.data)
+        serializer = UserSerializer(data=request.POST)
         if serializer.is_valid():
             serializer.save()
-            return Response({"message": "User registered successfully."}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return render(request, 'registration.html', {'message': 'User registered successfully.'})
+        return render(request, 'registration.html', {'errors': serializer.errors})
 
+#User Login Class
 class UserLoginView(APIView):
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)

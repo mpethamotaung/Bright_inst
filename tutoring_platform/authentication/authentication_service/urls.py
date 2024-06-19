@@ -18,7 +18,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from .views import UserRegistrationView, UserLoginView, TokenRefreshView, UserLogoutView ,index  # Ensure these imports are here
+from authentication_service.views import UserRegistrationView, UserLoginView, TokenRefreshView, UserLogoutView ,index  # Ensure these imports are here
 
 urlpatterns = [
     path('admin/', admin.site.urls),
