@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-+q&x&)7+a%4^2l0upm!y*enu*wo%@#45&t#$dwuhu-39vt(5x(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     "users", #include users app to authentication_service
     "rest_framework", #include django rest framework(DRF) 
     "rest_framework_simplejwt.token_blacklist", #Used to logout user 
+    "rest_framework_simplejwt",
+    "authentication_service"
 ]
 
 #Configure rest_framework settings for JWT
@@ -122,8 +124,8 @@ DATABASES = {
 }
 
 
-#Specify which model for django to use
-AUTH_USER_MODEL = 'users.CustomUser'
+# Add this line to specify the custom user model
+AUTH_USER_MODEL = 'users.User'
 
 
 # Password validation
@@ -131,16 +133,16 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 

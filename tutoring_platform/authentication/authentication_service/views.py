@@ -5,9 +5,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer, UserLoginSerializer, TokenRefreshSerializer  # Ensure TokenRefreshSerializer is imported
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import authenticate
+from django.shortcuts import render
+from users.models import User
 
 class UserRegistrationView(APIView):
+    def get(self, request):
+        return render(request, 'registration.html')
+
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -16,58 +20,43 @@ class UserRegistrationView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserLoginView(APIView):
+    def get(self, request):
+        return render(request, 'login.html')
+
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data['user']
-            
-            # Generate tokens
             refresh = RefreshToken.for_user(user)
-            access_token = str(refresh.access_token)
-            refresh_token = str(refresh)
-
-            # Return tokens in response
             return Response({
-                'message': 'User logged in successfully.',
-                'access_token': access_token,
-                'refresh_token': refresh_token
+                'access_token': str(refresh.access_token),
+                'refresh_token': str(refresh),
             }, status=status.HTTP_200_OK)
-
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UserLogoutView(APIView):
     def post(self, request):
-        refresh_token = request.data.get('refresh_token')
-
-        if not refresh_token:
-            return Response({'error': 'Refresh token is required.'}, status=status.HTTP_400_BAD_REQUEST)
-
         try:
+            refresh_token = request.data["refresh_token"]
             token = RefreshToken(refresh_token)
             token.blacklist()
+            return Response({"message": "User logged out successfully."}, status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-        return Response({'message': 'User logged out successfully.'}, status=status.HTTP_200_OK)
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 class TokenRefreshView(APIView):
     def post(self, request):
         serializer = TokenRefreshSerializer(data=request.data)
         if serializer.is_valid():
-            # Access the validated data and process the refresh token
-            refresh_token = serializer.validated_data['refresh_token']
-            try:
-                token = RefreshToken(refresh_token)
-            except Exception as e:
-                return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-            
-            # If everything is valid, return a new access token
-            return Response({
-                'access_token': str(token.access_token)
-            }, status=status.HTTP_200_OK)
-
-        # If serializer validation fails, return the validation errors
+            refresh = RefreshToken(serializer.data['refresh'])
+            data = {
+                'access': str(refresh.access_token)
+            }
+            return Response(data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def index(request):
+    return render(request, 'index.html')
 
 #Test code:
 from django.http import HttpResponse
