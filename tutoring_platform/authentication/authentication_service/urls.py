@@ -18,11 +18,11 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from authentication_service.views import UserRegistrationView, UserLoginView, TokenRefreshView, UserLogoutView ,index  # Ensure these imports are here
+from .views import UserRegistrationView, UserLoginView, TokenRefreshView, UserLogoutView ,index  # Ensure these imports are here
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/users/', include('users.urls')),
+    path('api/users/', include('users.urls')), #include users app
     path('api/auth/register/', UserRegistrationView.as_view(), name='user-registration'),  # Registration endpoint
     path('api/auth/login/', UserLoginView.as_view(), name='user-login'),  # Login endpoint
     path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token-refresh'), #Continuous logged in endpoint

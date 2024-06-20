@@ -1,34 +1,23 @@
 # authentication/authentication_service/views.py
-from django.shortcuts import render
+
 from rest_framework import status
-from django.views import View
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer, UserLoginSerializer, TokenRefreshSerializer  # Ensure TokenRefreshSerializer is imported
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
 
-#User registration class
-class UserRegistrationView(View):
-    #Get Method: renders registration html when reg page is accessed
-    def get(self, request):
-        return render(request, 'registration.html')
-    #POST Meth: processes form data
+class UserRegistrationView(APIView):
     def post(self, request):
-        serializer = UserSerializer(data=request.POST)
+        serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return render(request, 'registration.html', {'message': 'User registered successfully.'})
-        return render(request, 'registration.html', {'errors': serializer.errors})
+            return Response({"message": "User registered successfully."}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#User Login Class
-class UserLoginView(View):
-    #Get Method: renders login html when page is accessed
-    def get(self, request):
-        return render(request, 'login.html')
-    
-    #POST Method: validates user data 
+class UserLoginView(APIView):
     def post(self, request):
-        serializer = UserLoginSerializer(data=request.POST)
+        serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data['user']
             
@@ -37,14 +26,15 @@ class UserLoginView(View):
             access_token = str(refresh.access_token)
             refresh_token = str(refresh)
 
-            # Store tokens in the session
-            request.session['access_token'] = access_token
-            request.session['refresh_token'] = refresh_token
+            # Return tokens in response
+            return Response({
+                'message': 'User logged in successfully.',
+                'access_token': access_token,
+                'refresh_token': refresh_token
+            }, status=status.HTTP_200_OK)
 
-            return render(request, 'login.html', {'message': 'User logged in successfully.'})
-        return render(request, 'login.html', {'errors': serializer.errors})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-#User Logout Class
 class UserLogoutView(APIView):
     def post(self, request):
         refresh_token = request.data.get('refresh_token')
