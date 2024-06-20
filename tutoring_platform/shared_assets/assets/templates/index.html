@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <h1>Welcome to the Tutoring Platform</h1>
+    <nav>
+        <ul>
+            <li><a href="{% url 'user-registration' %}">Register</a></li>
+            <li><a href="{% url 'user-login' %}">Login</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
