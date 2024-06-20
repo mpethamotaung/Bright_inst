@@ -14,20 +14,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# authentication/authentication_service/urls.py
-
 from django.contrib import admin
-from django.urls import path, include
-from .views import UserRegistrationView, UserLoginView, TokenRefreshView, UserLogoutView ,index  # Ensure these imports are here
+from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/users/', include('users.urls')),
-    path('api/auth/register/', UserRegistrationView.as_view(), name='user-registration'),  # Registration endpoint
-    path('api/auth/login/', UserLoginView.as_view(), name='user-login'),  # Login endpoint
-    path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token-refresh'), #Continuous logged in endpoint
-    path('api/auth/logout/', UserLogoutView.as_view(), name='user-logout'), #Logout endpoint
-
-    #Test code
-    path('', index, name='index'),  # Root URL
 ]
