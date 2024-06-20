@@ -2,29 +2,29 @@
 {% load static %}
 
 {% block content %}
-  <h2>Login</h2>
-  {% if message %}
-    <p style="color: green;">{{ message }}</p>
-  {% endif %}
-  {% if errors %}
-    <ul style="color: red;">
-      {% for field, error_list in errors.items %}
-        {% for error in error_list %}
-          <li>{{ field }}: {{ error }}</li>
-        {% endfor %}
+<h2>Login</h2>
+{% if message %}
+  <p style="color: green;">{{ message }}</p>
+{% endif %}
+{% if errors %}
+  <ul style="color: red;">
+    {% for field, error_list in errors.items %}
+      {% for error in error_list %}
+        <li>{{ field }}: {{ error }}</li>
       {% endfor %}
-    </ul>
-  {% endif %}
-  <form method="post" action="{% url 'user-login' %}">
-    {% csrf_token %}
-    <div>
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required>
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-    </div>
-    <button type="submit">Login</button>
-  </form>
+    {% endfor %}
+  </ul>
+{% endif %}
+<form method="post" action="{% url 'user-login' %}">
+  {% csrf_token %}
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+  </div>
+  <button type="submit">Login</button>
+</form>
 {% endblock %}

@@ -43,6 +43,7 @@ class UserLoginView(View):
 
             return render(request, 'login.html', {'message': 'User logged in successfully.'})
         return render(request, 'login.html', {'errors': serializer.errors})
+
 #User Logout Class
 class UserLogoutView(APIView):
     def post(self, request):

@@ -15,10 +15,10 @@ from pathlib import Path
 #import to handle sessions
 from datetime import timedelta
 
-import os #templates config
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -86,13 +86,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "authentication_service.urls"
 
-# Template settings
-SHARED_TEMPLATES_DIR = os.path.join(BASE_DIR, '..', '..', 'shared_assets', 'assets', 'templates')
+# Add the path to shared_assets templates
+# Define the path to the shared templates directory
+SHARED_TEMPLATES_DIR = os.path.join(BASE_DIR, '..', 'shared_assets', 'assets', 'templates')
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates"), SHARED_TEMPLATES_DIR],
+        'DIRS': [SHARED_TEMPLATES_DIR],  # Add shared templates directory here
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -106,6 +107,7 @@ TEMPLATES = [
 ]
 
 
+
 WSGI_APPLICATION = "authentication_service.wsgi.application"
 
 
@@ -113,11 +115,12 @@ WSGI_APPLICATION = "authentication_service.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),  # Use os.path.join for paths
     }
 }
+
 
 #Specify which model for django to use
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -156,14 +159,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-STATIC_URL = "static/"
 
-# Add the path to shared_assets static files
-SHARED_STATIC_DIR = os.path.join(BASE_DIR, '..', '..', 'shared_assets', 'assets', 'static')
-AUTHENTICATION_STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+
+# Define the path to the shared static directory
+SHARED_STATIC_DIR = os.path.join(BASE_DIR,'..', 'shared_assets', 'assets', 'static')
 
 STATICFILES_DIRS = [
-    AUTHENTICATION_STATIC_DIR,
     SHARED_STATIC_DIR,
 ]
 
