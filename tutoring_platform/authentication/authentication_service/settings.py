@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     "rest_framework", #include django rest framework(DRF) 
     "rest_framework_simplejwt.token_blacklist", #Used to logout user 
     "rest_framework_simplejwt",
-    "authentication_service"
+    "authentication_service",
 ]
 
 #Configure rest_framework settings for JWT
